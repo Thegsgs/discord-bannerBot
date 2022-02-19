@@ -1,0 +1,27 @@
+"filename", "language", "JSON", "JavaScript", "HTML", "comment", "blank", "total"
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\bot.js", "JavaScript", 0, 51, 0, 0, 7, 58
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\commands\changeBackground.js", "JavaScript", 0, 30, 0, 0, 4, 34
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\commands\changeComponentColor.js", "JavaScript", 0, 33, 0, 0, 3, 36
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\commands\changeContainerColor.js", "JavaScript", 0, 71, 0, 0, 4, 75
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\commands\changeContainerShape.js", "JavaScript", 0, 114, 0, 0, 5, 119
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\commands\changeFont.js", "JavaScript", 0, 67, 0, 0, 4, 71
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\commands\changeIcons.js", "JavaScript", 0, 88, 0, 0, 6, 94
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\commands\changeRoles.js", "JavaScript", 0, 73, 0, 0, 5, 78
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\commands\changeTextPosition.js", "JavaScript", 0, 95, 0, 0, 4, 99
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\commands\changeTextSize.js", "JavaScript", 0, 32, 0, 0, 3, 35
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\commands\colorsMenu.js", "JavaScript", 0, 61, 0, 0, 4, 65
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\commands\postBanner.js", "JavaScript", 0, 18, 0, 0, 3, 21
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\commands\setup.js", "JavaScript", 0, 200, 0, 0, 16, 216
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\controllers\servers.js", "JavaScript", 0, 45, 0, 0, 7, 52
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\deploy-commands.js", "JavaScript", 0, 20, 0, 0, 4, 24
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\htmlTest.html", "HTML", 0, 0, 148, 0, 18, 166
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\models\servers.js", "JavaScript", 0, 96, 0, 0, 3, 99
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\package-lock.json", "JSON", 3988, 0, 0, 0, 1, 3989
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\package.json", "JSON", 23, 0, 0, 0, 1, 24
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\utils\addRole.js", "JavaScript", 0, 33, 0, 0, 3, 36
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\utils\makeBanner.js", "JavaScript", 0, 229, 0, 0, 28, 257
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\utils\removeRole.js", "JavaScript", 0, 23, 0, 0, 3, 26
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\utils\time.js", "JavaScript", 0, 9, 0, 7, 8, 24
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\utils\updateBanner.js", "JavaScript", 0, 47, 0, 0, 4, 51
+"c:\Users\Simon\Desktop\Web Projects\BannerBot alpha 0.3\utils\uploadBanner.js", "JavaScript", 0, 7, 0, 0, 2, 9
+"Total", "-", 4011, 1442, 148, 7, 150, 5758
