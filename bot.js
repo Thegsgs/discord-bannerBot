@@ -22,7 +22,16 @@ client.once("ready", () =>
 
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
-  // Checks if user is permitted and server has a banner.
+
+  // Check if server has banner
+  const noBannerTiers = ["NONE", "TIER_1"];
+  if (noBannerTiers.includes(interaction.guild.premiumTier)) {
+    interaction.reply(
+      "Sorry but it looks like your server does not have a banner."
+    );
+    return;
+  }
+
   const permittedRoles = await permissionsCheck(interaction);
   // If user is not permitted permitted roles is equal to false.
   if (!permittedRoles) {

@@ -1,14 +1,6 @@
 const { getServerConfig } = require("../controllers/servers");
 
 const permissionsCheck = async (interaction) => {
-  // Check if server has banner
-  const noBannerTiers = ["NONE", "TIER_1"];
-  if (noBannerTiers.includes(interaction.guild.premiumTier)) {
-    interaction.followUp(
-      "Sorry but it looks like your server does not have a banner."
-    );
-  }
-
   /* Try to get list of roles from server 
   If gets response check if user has permission */
   const serverConfig = await getServerConfig(interaction.guild.id);
