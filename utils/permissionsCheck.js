@@ -4,7 +4,7 @@ const permissionsCheck = async (interaction) => {
   // Check if server has banner
   const noBannerTiers = ["NONE", "TIER_1"];
   if (noBannerTiers.includes(interaction.guild.premiumTier)) {
-    interaction.reply(
+    interaction.followUp(
       "Sorry but it looks like your server does not have a banner."
     );
   }
