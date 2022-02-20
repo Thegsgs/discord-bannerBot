@@ -1,6 +1,6 @@
 const stopUpdating = (interaction, updatingFunc) => {
   clearInterval(updatingFunc);
-  interaction.editReply("Updating stopped.");
+  interaction.followUp("Updating stopped.");
 };
 
 module.exports = stopUpdating;

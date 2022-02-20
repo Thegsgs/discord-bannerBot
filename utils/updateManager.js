@@ -11,12 +11,12 @@ const updateManager = async (interaction, request) => {
         throw error;
       }
     } else {
-      interaction.reply("Banner updating has already started.");
+      interaction.followUp("Banner updating has already started.");
       return;
     }
   } else {
     if (!currentlyUpdating) {
-      interaction.reply(
+      interaction.followUp(
         "There was nothing to stop as the banner was not set to update in the first place."
       );
       return;

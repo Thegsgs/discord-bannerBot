@@ -9,7 +9,7 @@ const startUpdating = async (interaction) => {
   // Checks if the server has been set up before starting to update
   const serverConfig = await getServerConfig(interaction.guild.id);
   if (!serverConfig) {
-    interaction.editReply(
+    interaction.followUp(
       "Looks like the server has not been set up yet. Type /setup to set up this server."
     );
     return;
@@ -17,11 +17,11 @@ const startUpdating = async (interaction) => {
 
   const enoughTimePassedCheck = (lastTimeUpdated) => {
     if (
-      lastTimeUpdated - currentMinutes >= 0 ||
-      currentMinutes - lastTimeUpdated >= 0
+      lastTimeUpdated - currentMinutes >= 5 ||
+      currentMinutes - lastTimeUpdated >= 5
     )
       return true;
-    interaction.reply(
+    interaction.followUp(
       "Please wait longer before updating. (Update intervals are 5 minutes mininum)"
     );
     return false;
@@ -30,7 +30,7 @@ const startUpdating = async (interaction) => {
   if (!enoughTimePassedCheck(serverConfig.lastUpdated)) return;
   const buffer = await updateBanner(interaction);
   await uploadBanner(interaction, buffer);
-  await interaction.editReply("Started automatic updates!");
+  await interaction.followUp("Started automatic updates!");
   await changeProp(interaction.guild.id, "lastUpdated", currentMinutes);
   let updatingFunc = setInterval(async () => {
     const buffer = await updateBanner(interaction);
