@@ -135,7 +135,11 @@ const makeBanner = async (
         background-color: ${backgroundColor};
         display: flex;
         ${assignTextPos(textPosition)}
-        ${frameBackground(containerBackgroundImg)}
+        ${
+          backgroundColor == "Custom"
+            ? frameBackground(containerBackgroundImg)
+            : ""
+        }
         background-position: center;
         background-size: cover;
         ${returnShape(shape)}
@@ -240,7 +244,7 @@ const makeBanner = async (
           <div class="icon-border-2"><div class="icon icon-2"></div></div>
           <div class="icon-border-3"><div class="icon icon-3"></div></div>
           </div>
-          <p class="watermark">bannerBot Alpha 0.4</p>
+          <p class="watermark">bannerBot Alpha 0.6</p>
         </div>
       </body>
     </html>    

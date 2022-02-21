@@ -3,72 +3,79 @@ const { changeProp } = require("../controllers/servers");
 const tryCatchHelper = require("../utils/tryCatchHelper");
 
 const changeFont = async (interaction, client) => {
-  const fontsMenu = new MessageActionRow().addComponents(
-    new MessageSelectMenu()
-      .setCustomId("select")
-      .setPlaceholder("Please pick new font from the menu:")
-      .addOptions([
-        {
-          label: "Anton",
-          value: "Anton",
-        },
-        {
-          label: "Russo One",
-          value: "Russo One",
-        },
-        {
-          label: "Play",
-          value: "Play",
-        },
-        {
-          label: "Heebo",
-          value: "Heebo",
-        },
-      ])
-  );
-  const optionFilter = (option) => option.user.id === interaction.user.id;
-  const [collector, error] = await tryCatchHelper(
-    interaction.channel.createMessageComponentCollector({
-      optionFilter,
-      componentType: "SELECT_MENU",
-      time: 45000,
-      max: 1,
-    })
-  );
+  return new Promise(async (resolve, reject) => {
+    const fontsMenu = new MessageActionRow().addComponents(
+      new MessageSelectMenu()
+        .setCustomId("select")
+        .setPlaceholder("Please pick new font from the menu:")
+        .addOptions([
+          {
+            label: "Anton",
+            value: "Anton",
+          },
+          {
+            label: "Russo One",
+            value: "Russo One",
+          },
+          {
+            label: "Play",
+            value: "Play",
+          },
+          {
+            label: "Heebo",
+            value: "Heebo",
+          },
+        ])
+    );
+    const optionFilter = (option) => option.user.id === interaction.user.id;
 
-  if (error) {
-    interaction.followUp("An error has occured.");
-  }
-  let isDel = false;
-  collector.on("end", () => {
-    if (isDel) return;
-    interaction.deleteReply();
-    isDel = true;
-  });
-  collector.on("collect", async (option) => {
-    collector.stop();
-    option.reply({
-      content: `Changing font...`,
-      components: [],
+    const [menu, error1] = await tryCatchHelper(
+      interaction.reply({
+        content: "Please pick a new font:",
+        components: [fontsMenu],
+        fetchReply: true,
+      })
+    );
+
+    if (error1) reject(error1);
+
+    const [collector, error2] = await tryCatchHelper(
+      interaction.channel.createMessageComponentCollector({
+        optionFilter,
+        componentType: "SELECT_MENU",
+        time: 45000,
+        max: 1,
+      })
+    );
+
+    if (error2) reject(error2);
+
+    collector.on("end", (collected, endReason) => {
+      if (endReason === "time") {
+        interaction.followUp(
+          "You took too long to make a decision, going back to menu."
+        );
+        resolve();
+      }
+      if (!menu) return;
+      menu.delete();
     });
-    await changeProp(interaction.guild.id, "containerFont", option.values[0]);
-    option.followUp({
-      content: `Changed font to ${option.values[0]}...`,
-      components: [],
+
+    client.once("interactionCreate", (newInteraction) => {
+      if (newInteraction.user.id !== interaction.user.id) return;
+      collector.stop();
+    });
+
+    collector.on("collect", async (option) => {
+      collector.stop();
+      option.reply({
+        content: `Changing font...`,
+        components: [],
+      });
+      await changeProp(interaction.guild.id, "containerFont", option.values[0]);
+      resolve();
     });
   });
-
-  await interaction.reply({
-    content: "Please pick a new font:",
-    components: [fontsMenu],
-    fetchReply: true,
-  });
-
-  client.once("interactionCreate", (newInteraction) => {
-    if (newInteraction.user.id !== interaction.user.id) return;
-    collector.stop();
-  });
-  client.once("messageDelete", () => (isDel = true));
 };
 
 module.exports = changeFont;

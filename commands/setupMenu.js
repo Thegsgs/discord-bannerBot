@@ -116,32 +116,25 @@ const setupMenu = async (interaction, client, permittedRoles) => {
 
     const setupEmbed = new MessageEmbed()
       .setColor(serverConfig.containerBorderColor)
-      .setTitle("__How to use bannerBot:__")
+      .setTitle("**__bannerBot:__**")
       .setAuthor("bannerBot", client.user.displayAvatarURL())
       .setImage("attachment://updated-banner.png")
       .addFields(
         {
-          name: "Instructions:",
-          value: `Your current banner settings can be seen below.
-             To start using the customization menu, please select an option from the drop down menu below.
-             
-             You will be presented with further options and instructions.
-             After each change you can come back to this menu to view your changes before they get uploaded to the banner on the next update.`,
+          name: "⚠️⚠️⚠️ **__The bot is in early alpha state, things will break!__**⚠️⚠️⚠️",
+          value: `**__CURRENT SETTINGS:__**`,
         },
-        { name: "\u200B", value: "\u200B" },
         {
           name: "__Current frame settings__:",
-          value: `__Border color__: **${serverConfig.containerBorderColor}**
-                    __Font color__: **${serverConfig.fontColor}**
-                    __Font name__: **${serverConfig.containerFont}**
-                    __Text size__: **${serverConfig.textSize}**
-                    __Background color__: **${
-                      serverConfig.containerBackgroundColor
-                    }**
-                    __Background image__: ${
-                      serverConfig.containerBackgroundImage || "**None**"
-                    }
-                    __Custom Shape__: ${
+          value: `🔹__Border color__: **${serverConfig.containerBorderColor}**
+          🔹__Font color__: **${serverConfig.fontColor}**
+          🔹__Font name__: **${serverConfig.containerFont}**
+          🔹__Text size__: **${serverConfig.textSize}**
+          🔹__Background color__: **${serverConfig.containerBackgroundColor}**
+          🔹__Background image__: ${
+            serverConfig.containerBackgroundImage || "**None**"
+          }
+                    🔹__Custom Shape__: ${
                       serverConfig.containerShapeCustom || "**None**"
                     }
                     `,
@@ -152,68 +145,84 @@ const setupMenu = async (interaction, client, permittedRoles) => {
           value: `__Background Image__: ${
             serverConfig.backgroundImage || "**None**"
           }
-                    __Icons color__: **${serverConfig.iconsColor}**
-                    __Icon 1__: ${serverConfig.icon1 || "**None**"}
-                    __Icon 2__: ${serverConfig.icon2 || "**None**"}
-                    __Icon 3__: ${serverConfig.icon3 || "**None**"}
+          🔹__Icons color__: **${serverConfig.iconsColor}**
+          🔹__Icon 1__: ${serverConfig.icon1 || "**None**"}
+          🔹__Icon 2__: ${serverConfig.icon2 || "**None**"}
+          🔹__Icon 3__: ${serverConfig.icon3 || "**None**"}
                    `,
           inline: true,
         }
       )
       .setFooter("bannerBot", client.user.displayAvatarURL());
-    let isDel = false;
 
-    await interaction.editReply({
-      embeds: [setupEmbed],
-      components: [buttonRow, styleOptionsMenu, generalOptionsMenu],
-      files: [updatedBanner],
-      fetchReply: true,
-    });
+    const [menu, error2] = await tryCatchHelper(
+      interaction.followUp({
+        embeds: [setupEmbed],
+        components: [buttonRow, styleOptionsMenu, generalOptionsMenu],
+        files: [updatedBanner],
+        fetchReply: true,
+      })
+    );
+
+    if (error2) interaction.followUp("An error has occured.");
 
     client.once("interactionCreate", (newInteraction) => {
       if (newInteraction.user.id !== interaction.user.id) return;
       collector.stop();
     });
-    client.once("messageDelete", () => (isDel = true));
 
     const filter = (input) => input.user.id === interaction.user.id;
-    const [collector, error2] = await tryCatchHelper(
+    const [collector, error3] = await tryCatchHelper(
       interaction.channel.createMessageComponentCollector({
         filter,
         time: 45000,
       })
     );
 
-    if (error2) {
-      interaction.followUp("An error has occured.");
-    }
+    if (error3) interaction.followUp("An error has occured.");
 
-    collector.on("end", () => {
-      if (isDel) return;
-      interaction.deleteReply();
-      isDel = true;
+    collector.on("end", (collected, endReason) => {
+      if (endReason === "time") {
+        interaction.followUp("Closing menu due to inactivity.");
+      }
+      if (!menu) return;
+      menu.delete();
     });
+
     collector.on("collect", async (action) => {
       collector.stop();
-      if (action.customId === "exit") return;
+      if (action.customId === "exit") {
+        collector.stop();
+        return;
+      }
       if (action.values.includes("shape-change"))
         await changeContainerShape(action, client);
 
-      if (action.values.includes("background-change")) changeBackground(action);
+      if (action.values.includes("background-change"))
+        await changeBackground(action);
 
-      if (action.values.includes("font-change")) changeFont(action, client);
+      if (action.values.includes("font-change"))
+        await changeFont(action, client);
 
-      if (action.values.includes("size-change")) changeTextSize(action);
+      if (action.values.includes("size-change"))
+        try {
+          await changeTextSize(action);
+        } catch (error) {
+          interaction.followUp("An error has occured.");
+        }
 
-      if (action.values.includes("colors-change")) colorsMenu(action, client);
+      if (action.values.includes("colors-change"))
+        await colorsMenu(action, client);
 
       if (action.values.includes("position-change"))
-        changeTextPosition(action, client);
+        await changeTextPosition(action, client);
 
-      if (action.values.includes("icons-change")) changeIcons(action, client);
+      if (action.values.includes("icons-change"))
+        await changeIcons(action, client);
 
       if (action.values.includes("role-settings"))
-        changeRoles(action, client, permittedRoles);
+        await changeRoles(action, client, permittedRoles);
+      await setupMenu(interaction, client, permittedRoles);
     });
   } else {
     interaction.editReply("Starting first time setup...");
