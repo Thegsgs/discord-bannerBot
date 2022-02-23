@@ -81,6 +81,7 @@ const makeBanner = async (
     height: 540,
     deviceScaleFactor: 1,
   });
+  await page.setDefaultNavigationTimeout(0);
   await page.setContent(
     `
       <!DOCTYPE html>
