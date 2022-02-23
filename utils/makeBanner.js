@@ -95,6 +95,8 @@ const makeBanner = async (
       }
 
       .banner {
+        width: 960px
+        height: 540px
         padding-top: 140px;
         background-image: url(${backgroundImg});
         background-repeat: no-repeat;
