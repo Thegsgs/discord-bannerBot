@@ -186,7 +186,11 @@ const setupMenu = async (interaction, client, permittedRoles) => {
         interaction.followUp("Closing menu due to inactivity.");
       }
       if (!menu) return;
-      menu.delete();
+      try {
+        menu.delete();
+      } catch {
+        interaction.channel.send("An error has occured.");
+      }
     });
 
     collector.on("collect", async (action) => {
@@ -227,9 +231,7 @@ const setupMenu = async (interaction, client, permittedRoles) => {
   } else {
     interaction.editReply("Starting first time setup...");
     await addServer(interaction.guild.id);
-    interaction.editReply(
-      `You server has been set up, please run /setup again to start customizing.`
-    );
+    await setupMenu(interaction, client, permittedRoles);
   }
 };
 
