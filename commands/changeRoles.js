@@ -38,11 +38,13 @@ const changeRoles = async (interaction, client, permittedRoles) => {
       })
       .setFooter("bannerBot", client.user.displayAvatarURL());
 
-    const [menu, error1] = await interaction.reply({
-      embeds: [rolesEmbed],
-      components: [buttonRow],
-      fetchReply: true,
-    });
+    const [menu, error1] = await tryCatchHelper(
+      interaction.reply({
+        embeds: [rolesEmbed],
+        components: [buttonRow],
+        fetchReply: true,
+      })
+    );
 
     if (error1) reject(error1);
 
