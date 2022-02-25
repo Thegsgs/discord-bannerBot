@@ -14,7 +14,7 @@ const changeContainerShape = async (interaction, client) => {
           interaction.followUp("An error has occured.");
           reject(error);
         }
-        interaction.followUp("Custom shape applied successfully!");
+
         resolve();
       } else {
         interaction.followUp(`No image detected, try again.`);
