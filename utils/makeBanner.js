@@ -101,7 +101,7 @@ const makeBanner = async (
         padding-top: 140px;
         background-image: url(${backgroundImg});
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: contain;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -247,7 +247,7 @@ const makeBanner = async (
           <div class="icon-border-2"><div class="icon icon-2"></div></div>
           <div class="icon-border-3"><div class="icon icon-3"></div></div>
           </div>
-          <p class="watermark">bannerBot Alpha 0.7</p>
+          <p class="watermark">bannerBot Alpha 0.7.1</p>
         </div>
       </body>
     </html>    
