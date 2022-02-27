@@ -1,5 +1,7 @@
 const Server = require("../models/servers");
 
+// TODO: Make server Id the doc id
+
 const addServer = (serverId) => {
   return Server.create({ serverId })
     .then((createdSever) => createdSever)
