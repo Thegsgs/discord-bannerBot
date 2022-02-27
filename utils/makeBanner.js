@@ -101,7 +101,7 @@ const makeBanner = async (
         padding-top: 140px;
         background-image: url(${backgroundImg});
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: cover;
         display: flex;
         flex-direction: column;
         align-items: center;
