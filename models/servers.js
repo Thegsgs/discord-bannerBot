@@ -96,6 +96,11 @@ const serverSchema = new mongoose.Schema({
       return date.getUTCMinutes();
     },
   },
+  isUpdating: {
+    required: true,
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("server", serverSchema);

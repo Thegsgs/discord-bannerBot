@@ -15,29 +15,31 @@ const startUpdating = async (interaction) => {
     return;
   }
 
-  const enoughTimePassedCheck = (lastTimeUpdated) => {
-    if (
-      lastTimeUpdated - currentMinutes >= 5 ||
-      currentMinutes - lastTimeUpdated >= 5
-    )
-      return true;
-    interaction.followUp(
-      "Please wait longer before updating. (Update intervals are 5 minutes mininum)"
-    );
-    return false;
-  };
-
-  if (!enoughTimePassedCheck(serverConfig.lastUpdated)) return;
-  const buffer = await updateBanner(interaction);
-  await uploadBanner(interaction, buffer);
-  await interaction.followUp("Started automatic updates!");
-  await changeProp(interaction.guild.id, "lastUpdated", currentMinutes);
-  let updatingFunc = setInterval(async () => {
+  // Checks if 5 minutes have passed since last update
+  if (Math.abs(serverConfig.lastUpdated - currentMinutes) >= 5) {
     const buffer = await updateBanner(interaction);
     await uploadBanner(interaction, buffer);
+    await interaction.followUp("Started automatic updates!");
     await changeProp(interaction.guild.id, "lastUpdated", currentMinutes);
-  }, 450000);
-  return updatingFunc;
+    await changeProp(interaction.guild.id, "isUpdating", true);
+    const interval = await setInterval(async () => {
+      if (!serverConfig.isUpdating) clearInterval(interval);
+      const buffer = await updateBanner(interaction);
+      await uploadBanner(interaction, buffer);
+      await changeProp(interaction.guild.id, "lastUpdated", currentMinutes);
+    }, 300000);
+  } else {
+    // Creates delay based on last time updated
+    let delay = 5 - Math.abs(serverConfig.lastUpdated - currentMinutes);
+    if (delay < 0) delay = delay * -1;
+    const delayInMs = delay * 60000;
+    interaction.followUp(
+      `Last update was too recent, starting updates in ${delay} minutes.`
+    );
+    await setTimeout(() => {
+      startUpdating(interaction);
+    }, delayInMs);
+  }
 };
 
 module.exports = startUpdating;

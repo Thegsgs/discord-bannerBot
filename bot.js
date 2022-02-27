@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const setupMenu = require("./commands/setupMenu");
 const permissionsCheck = require("./utils/permissionsCheck");
 const updateManager = require("./utils/updateManager");
+const checkUpdatingServers = require("./utils/checkUpdatingServers");
 
 mongoose.connect("mongodb://localhost:27017/serversdb");
 
@@ -16,9 +17,10 @@ const client = new Client({
   ],
 });
 
-client.once("ready", () =>
-  console.log(`Cluster ${client.cluster.id} is ready!`)
-);
+client.once("ready", async () => {
+  console.log(`Cluster ${client.cluster.id} is ready!`);
+  await checkUpdatingServers();
+});
 
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
@@ -35,20 +37,17 @@ client.on("interactionCreate", async (interaction) => {
   const permittedRoles = await permissionsCheck(interaction);
   // If user is not permitted permitted roles is equal to false.
   if (!permittedRoles) {
-    interaction.reply("You're not permitted to use these commands!");
+    interaction.editReply("You're not permitted to use these commands!");
     return;
   }
 
   const { commandName } = interaction;
 
   if (commandName === "start-updating") {
-    await interaction.deferReply();
     await updateManager(interaction, "start");
   } else if (commandName === "stop-updating") {
-    await interaction.deferReply();
     await updateManager(interaction, "stop");
   } else if (commandName === "setup") {
-    await interaction.deferReply();
     await setupMenu(interaction, client, permittedRoles);
   }
 });

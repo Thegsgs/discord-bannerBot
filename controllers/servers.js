@@ -1,7 +1,7 @@
 const Server = require("../models/servers");
 
 const addServer = (serverId) => {
-  Server.create({ serverId })
+  return Server.create({ serverId })
     .then((createdSever) => createdSever)
     .catch((err) => console.log(err));
 };
@@ -10,7 +10,7 @@ const changeProp = (serverId, propToUpdate, newValue) => {
   return Server.findOneAndUpdate(
     { serverId },
     { [propToUpdate]: newValue },
-    { new: true, runValidators: true, upsert: false }
+    { new: true, runValidators: true, upsert: true }
   )
     .then((updatedConfig) => updatedConfig.propToUpdate)
     .catch((err) => console.log(err));
@@ -42,10 +42,17 @@ const getServerConfig = (id) => {
     .catch((err) => console.log(err));
 };
 
+const getServersList = () => {
+  return Server.find({ isUpdating: true })
+    .then((list) => list)
+    .catch((err) => console.err(err));
+};
+
 module.exports = {
   addServer,
   getServerConfig,
   changeProp,
   addRoleData,
   removeRoleData,
+  getServersList,
 };

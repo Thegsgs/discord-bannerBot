@@ -1,25 +1,36 @@
 const { getServerConfig } = require("../controllers/servers");
 
 const permissionsCheck = async (interaction) => {
-  /* Try to get list of roles from server 
+  return new Promise(async (resolve, reject) => {
+    await interaction.deferReply();
+    /* Try to get list of roles from server 
   If gets response check if user has permission */
-  const serverConfig = await getServerConfig(interaction.guild.id);
-  // If first time setup must be owner
-  if (!serverConfig) {
-    if (interaction.user.id !== interaction.guild.ownerId) return false;
-    return true;
-  }
-  const permittedRoles = [];
-  await serverConfig.roles.map((roleObj) =>
-    permittedRoles.push(roleObj.roleId)
-  );
+    const serverConfig = await getServerConfig(interaction.guild.id);
+    // If first time setup must be owner
+    if (!serverConfig) {
+      if (
+        interaction.user.id !== "367624248271044608" &&
+        interaction.user.id !== interaction.guild.ownerId
+      )
+        resolve(false);
+      else resolve(true);
+    } else {
+      const permittedRoles = [];
+      await serverConfig.roles.map((roleObj) =>
+        permittedRoles.push(roleObj.roleId)
+      );
 
-  // Guild owner and bot creator overrides permissions check
-  if (interaction.user.id == interaction.guild.ownerId) return permittedRoles;
-  if (interaction.user.id == "367624248271044608") return permittedRoles;
-  if (!permittedRoles.some((role) => interaction.member._roles.includes(role)))
-    return false;
-  return permittedRoles;
+      // Guild owner and bot creator overrides permissions check
+      if (interaction.user.id === "367624248271044608") resolve(permittedRoles);
+      if (interaction.user.id === interaction.guild.ownerId)
+        resolve(permittedRoles);
+      if (
+        permittedRoles.some((role) => interaction.member._roles.includes(role))
+      )
+        resolve(permittedRoles);
+      else resolve(false);
+    }
+  });
 };
 
 module.exports = permissionsCheck;

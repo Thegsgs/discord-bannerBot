@@ -247,7 +247,7 @@ const makeBanner = async (
           <div class="icon-border-2"><div class="icon icon-2"></div></div>
           <div class="icon-border-3"><div class="icon icon-3"></div></div>
           </div>
-          <p class="watermark">bannerBot Alpha 0.6</p>
+          <p class="watermark">bannerBot Alpha 0.7</p>
         </div>
       </body>
     </html>    
