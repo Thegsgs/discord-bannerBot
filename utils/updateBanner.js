@@ -15,36 +15,30 @@ const countVcMembers = (thisGuild) => {
   });
 };
 
-const updateBanner = async (interaction) => {
-  const serverConfig = await getServerConfig(interaction.guild.id);
-  return interaction.guild
-    .fetch()
-    .then((thisGuild) => {
-      return countVcMembers(thisGuild)
-        .then((inVc) => {
-          return makeBanner(
-            serverConfig.backgroundImage,
-            serverConfig.containerShape,
-            serverConfig.containerShapeCustom,
-            serverConfig.containerFont,
-            serverConfig.fontColor,
-            serverConfig.textSize,
-            serverConfig.containerBorderColor,
-            serverConfig.containerBackgroundColor,
-            serverConfig.containerBackgroundImage,
-            serverConfig.icon1,
-            serverConfig.icon2,
-            serverConfig.icon3,
-            serverConfig.iconsColor,
-            serverConfig.textPosition,
-            thisGuild.memberCount,
-            inVc,
-            thisGuild.premiumSubscriptionCount
-          );
-        })
-        .catch((err) => console.log(err));
-    })
-    .catch((err) => console.log(err));
+const updateBanner = async (guild) => {
+  const serverConfig = await getServerConfig(guild.id);
+  const thisGuild = await guild.fetch();
+  const inVc = await countVcMembers(thisGuild);
+
+  return makeBanner(
+    serverConfig.backgroundImage,
+    serverConfig.containerShape,
+    serverConfig.containerShapeCustom,
+    serverConfig.containerFont,
+    serverConfig.fontColor,
+    serverConfig.textSize,
+    serverConfig.containerBorderColor,
+    serverConfig.containerBackgroundColor,
+    serverConfig.containerBackgroundImage,
+    serverConfig.icon1,
+    serverConfig.icon2,
+    serverConfig.icon3,
+    serverConfig.iconsColor,
+    serverConfig.textPosition,
+    thisGuild.memberCount,
+    inVc,
+    thisGuild.premiumSubscriptionCount
+  );
 };
 
 module.exports = updateBanner;

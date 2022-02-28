@@ -20,6 +20,7 @@ const client = new Client({
 client.once("ready", async () => {
   console.log(`Cluster ${client.cluster.id} is ready!`);
   await checkUpdatingServers();
+  // TODO: AUTO RESUME UPDATING
 });
 
 client.on("interactionCreate", async (interaction) => {
@@ -44,9 +45,9 @@ client.on("interactionCreate", async (interaction) => {
   const { commandName } = interaction;
 
   if (commandName === "start-updating") {
-    await updateManager(interaction, "start");
+    await updateManager(client, interaction, "start");
   } else if (commandName === "stop-updating") {
-    await updateManager(interaction, "stop");
+    await updateManager(client, interaction, "stop");
   } else if (commandName === "setup") {
     await setupMenu(interaction, client, permittedRoles);
   }

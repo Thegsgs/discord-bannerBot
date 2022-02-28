@@ -4,7 +4,7 @@ const { getServerConfig } = require("../controllers/servers");
 const tryCatchHelper = require("./tryCatchHelper");
 
 // TODO: Change currently updating to check if server isUpdating set to true
-const updateManager = async (interaction, request) => {
+const updateManager = async (client, interaction, request) => {
   const [serverConfig, error] = await tryCatchHelper(
     getServerConfig(interaction.guild.id)
   );
@@ -26,7 +26,7 @@ const updateManager = async (interaction, request) => {
   if (request == "start") {
     if (!currentlyUpdating) {
       try {
-        await startUpdating(interaction);
+        await startUpdating(client, interaction);
       } catch (error) {
         throw error;
       }

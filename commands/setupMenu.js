@@ -21,16 +21,15 @@ const setupMenu = async (interaction, client, permittedRoles) => {
   const serverConfig = await getServerConfig(interaction.guild.id);
 
   if (serverConfig) {
-    const [banner, error1] = await tryCatchHelper(updateBanner(interaction));
+    const [banner, error1] = await tryCatchHelper(
+      updateBanner(interaction.guild)
+    );
 
     if (error1) {
       interaction.followUp("An error has occured.");
     }
 
-    const updatedBanner = await new MessageAttachment(
-      banner,
-      "updated-banner.png"
-    );
+    const updatedBanner = new MessageAttachment(banner, "updated-banner.png");
 
     const buttonRow = new MessageActionRow().addComponents(
       new MessageButton()
