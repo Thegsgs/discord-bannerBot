@@ -20,18 +20,20 @@ const client = new Client({
 });
 
 client.once("ready", async () => {
+  // Bot is ready
   console.log(`Cluster ${client.cluster.id} is ready!`);
+  // Check which servers have updating turned on
   const [updatingGuildsArr, err] = await tryCatchHelper(
     getUpdatingServers(client)
   );
   if (err) {
     throw err;
   }
-  //console.log(updatingGuildsArr);
+  // Resume updates on all servers which have it turned on.
   updatingGuildsArr.forEach((guild) => {
     resumeUpdates(client, guild);
   });
-  console.log(`${updatingGuildsArr.length} servers have resumed updating.`);
+  console.log(`${updatingGuildsArr.length} servers are resuming updates.`);
 });
 
 client.on("interactionCreate", async (interaction) => {

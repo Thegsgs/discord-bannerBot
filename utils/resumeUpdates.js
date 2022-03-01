@@ -2,6 +2,9 @@ const { getServerConfig, changeProp } = require("../controllers/servers");
 const updateBanner = require("./updateBanner");
 const uploadBanner = require("./uploadBanner");
 
+// ResumeUpdates is like StartUpdating only it doesn't rely on interactons
+// And does not output any message to a channel.
+
 const resumeUpdates = async (client, guild) => {
   const currentDate = new Date();
   const currentMinutes = parseInt(currentDate.getUTCMinutes());
@@ -23,7 +26,7 @@ const resumeUpdates = async (client, guild) => {
       await changeProp(guild.id, "lastUpdated", currentMinutes);
     }, 300000);
   } else {
-    // Creates delay based on last time updated substracted from 5 mins
+    // Create a delay based on last time updated substracted from 5 mins
     let delay = 5 - Math.abs(serverConfig.lastUpdated - currentMinutes);
     if (delay < 0) delay = delay * -1;
     const delayInMs = delay * 60000;
