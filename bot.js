@@ -53,7 +53,7 @@ client.on("interactionCreate", async (interaction) => {
   }
 
   const permittedRoles = await permissionsCheck(interaction).catch((err) =>
-    interaction.channel.message.send(err)
+    interaction.editReply(err)
   );
   // If user is not permitted permitted roles is equal to false.
   if (!permittedRoles) {
