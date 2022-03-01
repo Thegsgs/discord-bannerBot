@@ -16,7 +16,7 @@ const startUpdating = async (client, interaction) => {
   }
 
   // Checks if 5 minutes have passed since last update
-  if (Math.abs(serverConfig.lastUpdated - currentMinutes) >= 0) {
+  if (Math.abs(serverConfig.lastUpdated - currentMinutes) >= 5) {
     const buffer = await updateBanner(interaction.guild);
     await uploadBanner(client, interaction.guild, buffer);
     await interaction.followUp("Started automatic updates!");

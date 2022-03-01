@@ -44,7 +44,7 @@ const getServerConfig = (id) => {
     .catch((err) => console.log(err));
 };
 
-const getServersList = () => {
+const getUpdatingServersList = () => {
   return Server.find({ isUpdating: true })
     .then((list) => list)
     .catch((err) => console.err(err));
@@ -56,5 +56,5 @@ module.exports = {
   changeProp,
   addRoleData,
   removeRoleData,
-  getServersList,
+  getUpdatingServersList,
 };

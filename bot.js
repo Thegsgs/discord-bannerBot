@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 const setupMenu = require("./commands/setupMenu");
 const permissionsCheck = require("./utils/permissionsCheck");
 const updateManager = require("./utils/updateManager");
-const checkUpdatingServers = require("./utils/checkUpdatingServers");
+const getUpdatingServers = require("./utils/getUpdatingServers");
+const resumeUpdates = require("./utils/resumeUpdates");
+const tryCatchHelper = require("./utils/tryCatchHelper");
 
 mongoose.connect("mongodb://localhost:27017/serversdb");
 
@@ -19,8 +21,17 @@ const client = new Client({
 
 client.once("ready", async () => {
   console.log(`Cluster ${client.cluster.id} is ready!`);
-  await checkUpdatingServers();
-  // TODO: AUTO RESUME UPDATING
+  const [updatingGuildsArr, err] = await tryCatchHelper(
+    getUpdatingServers(client)
+  );
+  if (err) {
+    throw err;
+  }
+  //console.log(updatingGuildsArr);
+  updatingGuildsArr.forEach((guild) => {
+    resumeUpdates(client, guild);
+  });
+  console.log(`${updatingGuildsArr.length} servers have resumed updating.`);
 });
 
 client.on("interactionCreate", async (interaction) => {

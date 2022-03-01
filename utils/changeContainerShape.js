@@ -1,6 +1,6 @@
 const { MessageActionRow, MessageSelectMenu } = require("discord.js");
 const { changeProp } = require("../controllers/servers");
-const tryCatchHelper = require("../utils/tryCatchHelper");
+const tryCatchHelper = require("./tryCatchHelper");
 
 const changeContainerShape = async (interaction, client) => {
   return new Promise(async (resolve, reject) => {
@@ -98,6 +98,7 @@ const changeContainerShape = async (interaction, client) => {
     collector.on("collect", async (option) => {
       collector.stop();
       if (!option.values.includes("custom")) {
+        interaction.followUp("Changing shape...");
         await changeProp(interaction.guild.id, "containerShapeCustom", "");
         await changeProp(
           interaction.guild.id,

@@ -3,7 +3,6 @@ const stopUpdating = require("../commands/stopUpdating");
 const { getServerConfig } = require("../controllers/servers");
 const tryCatchHelper = require("./tryCatchHelper");
 
-// TODO: Change currently updating to check if server isUpdating set to true
 const updateManager = async (client, interaction, request) => {
   const [serverConfig, error] = await tryCatchHelper(
     getServerConfig(interaction.guild.id)

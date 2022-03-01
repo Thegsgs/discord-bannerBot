@@ -6,14 +6,14 @@ const {
   MessageButton,
   MessageAttachment,
 } = require("discord.js");
-const changeContainerShape = require("./changeContainerShape");
-const changeBackground = require("./changeBackground");
-const changeTextPosition = require("./changeTextPosition");
-const changeFont = require("./changeFont");
-const changeTextSize = require("./changeTextSize");
-const changeIcons = require("./changeIcons");
-const colorsMenu = require("./colorsMenu");
-const changeRoles = require("./changeRoles");
+const changeContainerShape = require("../utils/changeContainerShape");
+const changeBackground = require("../utils/changeBackground");
+const changeTextPosition = require("../utils/changeTextPosition");
+const changeFont = require("../utils/changeFont");
+const changeTextSize = require("../utils/changeTextSize");
+const changeIcons = require("../utils/changeIcons");
+const colorsMenu = require("../utils/colorsMenu");
+const changeRoles = require("../utils/changeRoles");
 const updateBanner = require("../utils/updateBanner");
 const tryCatchHelper = require("../utils/tryCatchHelper");
 
@@ -141,9 +141,11 @@ const setupMenu = async (interaction, client, permittedRoles) => {
         },
         {
           name: "__Current general settings__:",
-          value: `__Background Image__: ${
-            serverConfig.backgroundImage || "**None**"
+          value: `
+          __Currently updating__: ${
+            serverConfig.isUpdating ? "Updating!  🟢" : "Not updating!  🔴"
           }
+          __Background Image__: ${serverConfig.backgroundImage || "**None**"}
           🔹__Icons color__: **${serverConfig.iconsColor}**
           🔹__Icon 1__: ${serverConfig.icon1 || "**None**"}
           🔹__Icon 2__: ${serverConfig.icon2 || "**None**"}
