@@ -4,6 +4,10 @@ const tryCatchHelper = require("./tryCatchHelper");
 const permissionsCheck = async (interaction) => {
   return new Promise(async (resolve, reject) => {
     await interaction.deferReply().catch((err) => console.error(err));
+    // Check self roles for Administrator role
+    if (!interaction.guild.me.permissions.has(Permissions.FLAGS.ADMINISTRATOR))
+      reject("Insufficent permissions.");
+
     /* Try to get list of roles from server 
   If gets response check if user has permission */
     const [serverConfig, err] = await tryCatchHelper(
