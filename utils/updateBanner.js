@@ -20,7 +20,7 @@ const updateBanner = async (guild) => {
   const [serverConfig, err] = await tryCatchHelper(getServerConfig(guild.id));
   if (err) console.error(err);
   const thisGuild = await guild.fetch().catch((err) => console.error(err));
-  const inVc = countVcMembers(thisGuild);
+  const inVc = await countVcMembers(thisGuild);
 
   return makeBanner(
     serverConfig.backgroundImage,
