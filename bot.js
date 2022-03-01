@@ -31,6 +31,7 @@ client.once("ready", async () => {
   }
   // Resume updates on all servers which have it turned on.
   updatingGuildsArr.forEach((guild) => {
+    if (!guild.me.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
     resumeUpdates(client, guild);
   });
   console.log(`${updatingGuildsArr.length} servers are resuming updates.`);
