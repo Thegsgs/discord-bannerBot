@@ -1,5 +1,5 @@
 const { Client } = require("discord.js-cluster");
-const { Intents } = require("discord.js");
+const { Intents, Permissions } = require("discord.js");
 const mongoose = require("mongoose");
 const setupMenu = require("./commands/setupMenu");
 const permissionsCheck = require("./utils/permissionsCheck");
