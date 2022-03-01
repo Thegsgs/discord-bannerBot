@@ -45,9 +45,9 @@ const resumeUpdates = async (client, guild) => {
     console.log(
       `${guild.name}'s update was too recent, starting updates in ${delay} minutes.`
     );
-    await setTimeout(() => {
+    setTimeout(() => {
       resumeUpdates(client, guild);
-    }, delayInMs).catch((err) => console.error(err));
+    }, delayInMs);
   }
 };
 
