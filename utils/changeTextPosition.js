@@ -92,7 +92,7 @@ const changeTextPosition = async (interaction, client) => {
         resolve();
       }
       if (!menu) return;
-      menu.delete();
+      menu.delete().catch((err) => console.error(err));
     });
     collector.on("collect", async (option) => {
       collector.stop();
@@ -100,7 +100,11 @@ const changeTextPosition = async (interaction, client) => {
         content: `Changing text position...`,
         components: [],
       });
-      await changeProp(interaction.guild.id, "textPosition", option.values[0]);
+      await changeProp(
+        interaction.guild.id,
+        "textPosition",
+        option.values[0]
+      ).catch((err) => console.error(err));
       resolve();
     });
   });

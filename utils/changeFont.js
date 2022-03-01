@@ -58,7 +58,7 @@ const changeFont = async (interaction, client) => {
         resolve();
       }
       if (!menu) return;
-      menu.delete();
+      menu.delete().catch((err) => console.error(err));
     });
 
     client.once("interactionCreate", (newInteraction) => {
@@ -72,7 +72,11 @@ const changeFont = async (interaction, client) => {
         content: `Changing font...`,
         components: [],
       });
-      await changeProp(interaction.guild.id, "containerFont", option.values[0]);
+      await changeProp(
+        interaction.guild.id,
+        "containerFont",
+        option.values[0]
+      ).catch((err) => console.error(err));
       resolve();
     });
   });

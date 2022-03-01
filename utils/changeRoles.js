@@ -6,7 +6,9 @@ const tryCatchHelper = require("../utils/tryCatchHelper");
 
 const changeRoles = async (interaction, client, permittedRoles) => {
   return new Promise(async (resolve, reject) => {
-    const serverConfig = await getServerConfig(interaction.guild.id);
+    const serverConfig = await getServerConfig(interaction.guild.id).catch(
+      (err) => console.error(err)
+    );
     const buttonRow = new MessageActionRow().addComponents(
       new MessageButton()
         .setCustomId("exit")
@@ -77,9 +79,14 @@ const changeRoles = async (interaction, client, permittedRoles) => {
     collector.on("collect", async (action) => {
       collector.stop();
       if (action.customId === "exit") return;
-      if (action.customId === "add") await addRole(action, permittedRoles);
+      if (action.customId === "add")
+        await addRole(action, permittedRoles).catch((err) =>
+          console.error(err)
+        );
       if (action.customId === "remove")
-        await removeRole(action, permittedRoles);
+        await removeRole(action, permittedRoles).catch((err) =>
+          console.error(err)
+        );
       resolve();
     });
   });

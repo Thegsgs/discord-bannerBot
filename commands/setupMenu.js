@@ -188,7 +188,7 @@ const setupMenu = async (interaction, client, permittedRoles) => {
       }
       if (!menu) return;
       try {
-        menu.delete();
+        menu.delete().catch((err) => console.error(err));
       } catch {
         interaction.channel.send("An error has occured.");
       }
@@ -201,38 +201,44 @@ const setupMenu = async (interaction, client, permittedRoles) => {
         return;
       }
       if (action.values.includes("shape-change"))
-        await changeContainerShape(action, client);
+        await changeContainerShape(action, client).catch((err) =>
+          console.error(err)
+        );
 
       if (action.values.includes("background-change"))
-        await changeBackground(action);
+        await changeBackground(action).catch((err) => console.error(err));
 
       if (action.values.includes("font-change"))
-        await changeFont(action, client);
+        await changeFont(action, client).catch((err) => console.error(err));
 
       if (action.values.includes("size-change"))
-        try {
-          await changeTextSize(action);
-        } catch (error) {
-          interaction.followUp("An error has occured.");
-        }
+        await changeTextSize(action).catch((err) => console.error(err));
 
       if (action.values.includes("colors-change"))
-        await colorsMenu(action, client);
+        await colorsMenu(action, client).catch((err) => console.error(err));
 
       if (action.values.includes("position-change"))
-        await changeTextPosition(action, client);
+        await changeTextPosition(action, client).catch((err) =>
+          console.error(err)
+        );
 
       if (action.values.includes("icons-change"))
-        await changeIcons(action, client);
+        await changeIcons(action, client).catch((err) => console.error(err));
 
       if (action.values.includes("role-settings"))
-        await changeRoles(action, client, permittedRoles);
-      await setupMenu(interaction, client, permittedRoles);
+        await changeRoles(action, client, permittedRoles).catch((err) =>
+          console.error(err)
+        );
+      await setupMenu(interaction, client, permittedRoles).catch((err) =>
+        console.error(err)
+      );
     });
   } else {
     interaction.editReply("Starting first time setup...");
-    await addServer(interaction.guild.id);
-    await setupMenu(interaction, client, permittedRoles);
+    await addServer(interaction.guild.id).catch((err) => console.error(err));
+    await setupMenu(interaction, client, permittedRoles).catch((err) =>
+      console.error(err)
+    );
   }
 };
 

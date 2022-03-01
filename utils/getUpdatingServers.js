@@ -11,7 +11,10 @@ const getUpdatingServers = async (client) => {
     if (err) reject(err);
     // Convert servers that are updating to discord Guild format and return
     updatingServers.forEach(async (server) => {
-      const guildFromServer = await client.guilds.fetch(server.serverId);
+      const [guildFromServer, err2] = await tryCatchHelper(
+        client.guilds.fetch(server.serverId)
+      );
+      if (err2) reject(err2);
       updatingGuilds.push(guildFromServer);
     });
     resolve(updatingGuilds);

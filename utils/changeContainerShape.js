@@ -8,8 +8,16 @@ const changeContainerShape = async (interaction, client) => {
       if (url.endsWith(".jpg") || url.endsWith(".png")) {
         interaction.followUp("Changing background, please wait...");
         try {
-          await changeProp(interaction.guild.id, "containerShapeCustom", url);
-          await changeProp(interaction.guild.id, "containerShape", "custom");
+          await changeProp(
+            interaction.guild.id,
+            "containerShapeCustom",
+            url
+          ).catch((err) => console.error(err));
+          await changeProp(
+            interaction.guild.id,
+            "containerShape",
+            "custom"
+          ).catch((err) => console.error(err));
         } catch (error) {
           interaction.followUp("An error has occured.");
           reject(error);
@@ -92,19 +100,23 @@ const changeContainerShape = async (interaction, client) => {
         resolve();
       }
       if (!menu) return;
-      menu.delete();
+      menu.delete().catch((err) => console.error(err));
     });
 
     collector.on("collect", async (option) => {
       collector.stop();
       if (!option.values.includes("custom")) {
         interaction.followUp("Changing shape...");
-        await changeProp(interaction.guild.id, "containerShapeCustom", "");
+        await changeProp(
+          interaction.guild.id,
+          "containerShapeCustom",
+          ""
+        ).catch((err) => console.error(err));
         await changeProp(
           interaction.guild.id,
           "containerShape",
           option.values[0]
-        );
+        ).catch((err) => console.error(err));
         resolve();
       } else {
         option.reply({
@@ -125,10 +137,14 @@ const changeContainerShape = async (interaction, client) => {
         if (messages.first()) {
           if (messages.first().attachments.first()) {
             const imageURL = messages.first().attachments.first().url;
-            await checkAndUpload(imageURL, interaction);
+            await checkAndUpload(imageURL, interaction).catch((err) =>
+              console.error(err)
+            );
           } else if (messages.first().content) {
             const imageURL = messages.first().content;
-            await checkAndUpload(imageURL, interaction);
+            await checkAndUpload(imageURL, interaction).catch((err) =>
+              console.error(err)
+            );
           } else {
             interaction.followUp(`No message detected, try again.`);
             resolve();

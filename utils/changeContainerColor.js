@@ -11,12 +11,12 @@ const changeContainerColor = async (interaction) => {
             interaction.guild.id,
             "containerBackgroundImage",
             url
-          );
+          ).catch((err) => console.error(err));
           await changeProp(
             interaction.guild.id,
             "containerBackgroundColor",
             "Custom"
-          );
+          ).catch((err) => console.error(err));
           resolve();
         } catch (error) {
           interaction.followUp(
@@ -54,20 +54,26 @@ const changeContainerColor = async (interaction) => {
           "Please upload a valid .png link or paste an image:"
         );
 
-        const link = await interaction.channel.awaitMessages({
-          filter,
-          time: 45000,
-          max: 1,
-        });
+        const link = await interaction.channel
+          .awaitMessages({
+            filter,
+            time: 45000,
+            max: 1,
+          })
+          .catch((err) => console.error(err));
 
         if (link.first()) {
           if (link.first().attachments.first()) {
             const imageURL = link.first().attachments.first().url;
-            await checkAndUpload(imageURL, interaction);
+            await checkAndUpload(imageURL, interaction).catch((err) =>
+              console.error(err)
+            );
             resolve();
           } else if (link.first().content) {
             const imageURL = link.first().content;
-            await checkAndUpload(imageURL, interaction);
+            await checkAndUpload(imageURL, interaction).catch((err) =>
+              console.error(err)
+            );
             resolve();
           } else {
             interaction.followUp(`No message detected, try again.`);
@@ -85,7 +91,7 @@ const changeContainerColor = async (interaction) => {
           interaction.guild.id,
           "containerBackgroundColor",
           color
-        );
+        ).catch((err) => console.error(err));
         resolve();
       } else {
         interaction.followUp(`No valid message detected, try again.`);

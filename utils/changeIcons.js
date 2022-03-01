@@ -61,7 +61,7 @@ const changeIcons = async (interaction, client) => {
         resolve();
       }
       if (!menu) return;
-      menu.delete();
+      menu.delete().catch((err) => console.error(err));
     });
 
     collector.on("collect", async (option) => {
@@ -84,11 +84,15 @@ const changeIcons = async (interaction, client) => {
       if (messages.first()) {
         if (messages.first().attachments.first()) {
           const imageURL = messages.first().attachments.first().url;
-          await checkAndUpload(imageURL, option, option.values[0]);
+          await checkAndUpload(imageURL, option, option.values[0]).catch(
+            (err) => console.error(err)
+          );
           resolve();
         } else if (messages.first().content) {
           const imageURL = messages.first().content;
-          await checkAndUpload(imageURL, option, option.values[0]);
+          await checkAndUpload(imageURL, option, option.values[0]).catch(
+            (err) => console.error(err)
+          );
           resolve();
         } else {
           option.followUp(`No message detected, try again.`);

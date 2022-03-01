@@ -21,11 +21,15 @@ const changeBackground = async (interaction) => {
     if (messages.first()) {
       if (messages.first().attachments.first()) {
         const imageURL = messages.first().attachments.first().url;
-        await checkAndUpload(imageURL, interaction, "backgroundImage");
+        await checkAndUpload(imageURL, interaction, "backgroundImage").catch(
+          (err) => console.error(err)
+        );
         resolve();
       } else if (messages.first().content) {
         const imageURL = messages.first().content;
-        await checkAndUpload(imageURL, interaction, "backgroundImage");
+        await checkAndUpload(imageURL, interaction, "backgroundImage").catch(
+          (err) => console.error(err)
+        );
         resolve();
       } else {
         interaction.editReply(`No message detected, try again.`);

@@ -5,7 +5,9 @@ const checkAndUpload = async (url, interaction, setting) => {
     if (url.endsWith(".jpg") || url.endsWith(".png")) {
       try {
         interaction.followUp("Aplying new setting...");
-        await changeProp(interaction.guild.id, setting, url);
+        await changeProp(interaction.guild.id, setting, url).catch((err) =>
+          console.error(err)
+        );
         resolve();
       } catch (error) {
         interaction.followUp(

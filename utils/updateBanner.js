@@ -1,5 +1,6 @@
 const makeBanner = require("./makeBanner");
 const { getServerConfig } = require("../controllers/servers");
+const tryCatchHelper = require("./tryCatchHelper");
 
 const countVcMembers = (thisGuild) => {
   let inVc = 0;
@@ -16,9 +17,10 @@ const countVcMembers = (thisGuild) => {
 };
 
 const updateBanner = async (guild) => {
-  const serverConfig = await getServerConfig(guild.id);
-  const thisGuild = await guild.fetch();
-  const inVc = await countVcMembers(thisGuild);
+  const [serverConfig, err] = await tryCatchHelper(getServerConfig(guild.id));
+  if (err) console.error(err);
+  const thisGuild = await guild.fetch().catch((err) => console.error(err));
+  const inVc = countVcMembers(thisGuild);
 
   return makeBanner(
     serverConfig.backgroundImage,

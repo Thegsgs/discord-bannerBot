@@ -24,7 +24,9 @@ const changeComponentColor = async (interaction, component) => {
       const color = messages.first().content;
       if (regex.test(color)) {
         interaction.followUp("Changing color, please wait...");
-        await changeProp(interaction.guild.id, component, color);
+        await changeProp(interaction.guild.id, component, color).catch((err) =>
+          console.error(err)
+        );
         resolve();
       } else {
         interaction.followUp(`No valid color detected, try again.`);

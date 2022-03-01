@@ -70,10 +70,12 @@ const colorsMenu = async (interaction, client) => {
     collector.on("collect", async (option) => {
       collector.stop();
       if (option.values[0] !== "containerBackgroundColor") {
-        await changeComponentColor(option, option.values[0]);
+        await changeComponentColor(option, option.values[0]).catch((err) =>
+          console.error(err)
+        );
         resolve();
       } else {
-        await changeContainerColor(option);
+        await changeContainerColor(option).catch((err) => console.error(err));
         resolve();
       }
     });

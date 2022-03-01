@@ -27,7 +27,7 @@ client.once("ready", async () => {
     getUpdatingServers(client)
   );
   if (err) {
-    throw err;
+    console.error(err);
   }
   // Resume updates on all servers which have it turned on.
   updatingGuildsArr.forEach((guild) => {
@@ -37,6 +37,10 @@ client.once("ready", async () => {
 });
 
 client.on("interactionCreate", async (interaction) => {
+  process.on("unhandledRejection", (error) => {
+    console.error("Unhandled promise rejection:", error);
+  });
+
   if (!interaction.isCommand()) return;
 
   // Check if server has banner

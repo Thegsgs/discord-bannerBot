@@ -1,4 +1,5 @@
 const { getServerConfig, changeProp } = require("../controllers/servers");
+const tryCatchHelper = require("./tryCatchHelper");
 const updateBanner = require("./updateBanner");
 const uploadBanner = require("./uploadBanner");
 
@@ -8,22 +9,33 @@ const uploadBanner = require("./uploadBanner");
 const resumeUpdates = async (client, guild) => {
   const currentDate = new Date();
   const currentMinutes = parseInt(currentDate.getUTCMinutes());
-  const serverConfig = await getServerConfig(guild.id);
+  const [serverConfig, err] = await tryCatchHelper(getServerConfig(guild.id));
+  if (err) console.error(err);
   // Checks if 5 minutes have passed since last update
   if (Math.abs(serverConfig.lastUpdated - currentMinutes) >= 5) {
-    const buffer = await updateBanner(guild);
-    await uploadBanner(client, guild, buffer);
+    const buffer = await updateBanner(guild).catch((err) => console.error(err));
+    await uploadBanner(client, guild, buffer).catch((err) =>
+      console.error(err)
+    );
     console.log(`Started automatic updates on ${guild.name}`);
-    await changeProp(guild.id, "lastUpdated", currentMinutes);
-    await changeProp(guild.id, "isUpdating", true);
+    await changeProp(guild.id, "lastUpdated", currentMinutes).catch((err) =>
+      console.error(err)
+    );
+    await changeProp(guild.id, "isUpdating", true).catch((err) =>
+      console.error(err)
+    );
     // Start updating with 5 minutes interval
     const interval = await setInterval(async () => {
       const serverConfig = await getServerConfig(guild.id);
       // Clear interval if updating property is false
       if (!serverConfig.isUpdating) clearInterval(interval);
       const buffer = await updateBanner(guild);
-      await uploadBanner(client, guild, buffer);
-      await changeProp(guild.id, "lastUpdated", currentMinutes);
+      await uploadBanner(client, guild, buffer).catch((err) =>
+        console.error(err)
+      );
+      await changeProp(guild.id, "lastUpdated", currentMinutes).catch((err) =>
+        console.error(err)
+      );
     }, 300000);
   } else {
     // Create a delay based on last time updated substracted from 5 mins
@@ -35,7 +47,7 @@ const resumeUpdates = async (client, guild) => {
     );
     await setTimeout(() => {
       resumeUpdates(client, guild);
-    }, delayInMs);
+    }, delayInMs).catch((err) => console.error(err));
   }
 };
 

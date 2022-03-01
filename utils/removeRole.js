@@ -35,7 +35,9 @@ const removeRole = async (interaction, permittedRoles) => {
       resolve();
     }
     interaction.followUp(`Removing role ${role.name}...`);
-    await removeRoleData(interaction.guild.id, role.id);
+    await removeRoleData(interaction.guild.id, role.id).catch((err) =>
+      console.error(err)
+    );
     resolve();
   });
 };
