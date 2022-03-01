@@ -1,3 +1,4 @@
+const { Permissions } = require("discord.js");
 const { getServerConfig } = require("../controllers/servers");
 const tryCatchHelper = require("./tryCatchHelper");
 
