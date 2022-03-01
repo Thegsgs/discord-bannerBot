@@ -20,6 +20,9 @@ const client = new Client({
 });
 
 client.once("ready", async () => {
+  process.on("unhandledRejection", (error) => {
+    console.error("Unhandled promise rejection:", error);
+  });
   // Bot is ready
   console.log(`Cluster ${client.cluster.id} is ready!`);
   // Check which servers have updating turned on
@@ -38,10 +41,6 @@ client.once("ready", async () => {
 });
 
 client.on("interactionCreate", async (interaction) => {
-  process.on("unhandledRejection", (error) => {
-    console.error("Unhandled promise rejection:", error);
-  });
-
   if (!interaction.isCommand()) return;
 
   // Check if server has banner
