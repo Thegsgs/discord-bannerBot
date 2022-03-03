@@ -135,7 +135,7 @@ const setupMenu = async (interaction, client, permittedRoles) => {
           inline: true,
         },
         {
-          name: "Current general settings:",
+          name: "Current banner settings:",
           value: `
           🔹Background Image: ${
             `[Link](${serverConfig.backgroundImage})` || "**None**"
