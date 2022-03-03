@@ -1,4 +1,4 @@
-const removeRoleData = require("../controllers/servers");
+const { removeRoleData } = require("../controllers/servers");
 const tryCatchHelper = require("../utils/tryCatchHelper");
 
 const removeRole = async (interaction, permittedRoles) => {

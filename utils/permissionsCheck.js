@@ -7,7 +7,7 @@ const permissionsCheck = async (interaction) => {
     await interaction.deferReply().catch((err) => console.error(err));
     // Check self roles for Administrator role
     if (!interaction.guild.me.permissions.has(Permissions.FLAGS.ADMINISTRATOR))
-      reject("Insufficent permissions.");
+      reject("Insufficent bot permissions.");
 
     /* Try to get list of roles from server 
   If gets response check if user has permission */
@@ -15,14 +15,13 @@ const permissionsCheck = async (interaction) => {
       getServerConfig(interaction.guild.id)
     );
     if (err) reject(err);
-    // If first time setup must be owner
-    // Or Admin or have manage server role
+    // If first time setup must be owner, bot creator, admin or manage server
     if (!serverConfig) {
       if (
         interaction.user.id !== "367624248271044608" &&
         interaction.user.id !== interaction.guild.ownerId &&
-        !interaction.user.permissions.has(Permissions.FLAGS.ADMINISTRATOR) &&
-        !interaction.user.permissions.has(Permissions.FLAGS.MANAGE_GUILD)
+        !interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR) &&
+        !interaction.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)
       )
         resolve(false);
       else resolve(true);
@@ -30,20 +29,18 @@ const permissionsCheck = async (interaction) => {
       const permittedRoles = [];
       serverConfig.roles.map((roleObj) => permittedRoles.push(roleObj.roleId));
 
-      // Guild owner and bot creator overrides permissions check
-      if (interaction.user.id === "367624248271044608") resolve(permittedRoles);
-      if (interaction.user.id === interaction.guild.ownerId)
-        resolve(permittedRoles);
+      // Guild owner, bot creator, admin and manage server role overrides permissions check
       if (
-        interaction.user.permissions.has(Permissions.FLAGS.ADMINISTRATOR) ||
-        interaction.user.permissions.has(Permissions.FLAGS.MANAGE_GUILD)
+        interaction.user.id !== "367624248271044608" &&
+        interaction.user.id !== interaction.guild.ownerId &&
+        !interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR) &&
+        !interaction.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD) &&
+        !permittedRoles.some((role) => interaction.member._roles.includes(role))
       )
+        resolve(false);
+      else {
         resolve(permittedRoles);
-      if (
-        permittedRoles.some((role) => interaction.member._roles.includes(role))
-      )
-        resolve(permittedRoles);
-      else resolve(false);
+      }
     }
   });
 };
