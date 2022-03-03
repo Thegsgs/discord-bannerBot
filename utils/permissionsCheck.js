@@ -35,6 +35,11 @@ const permissionsCheck = async (interaction) => {
       if (interaction.user.id === interaction.guild.ownerId)
         resolve(permittedRoles);
       if (
+        interaction.user.permissions.has(Permissions.FLAGS.ADMINISTRATOR) ||
+        interaction.user.permissions.has(Permissions.FLAGS.MANAGE_GUILD)
+      )
+        resolve(permittedRoles);
+      if (
         permittedRoles.some((role) => interaction.member._roles.includes(role))
       )
         resolve(permittedRoles);
