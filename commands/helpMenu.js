@@ -8,7 +8,8 @@ const helpMenu = async (client, interaction, embedNum) => {
     .addFields({
       name: "<:binoculars:948678441673314304> General overview:",
       value: `To view your current banner settings, to set up the bot for the first time and to start editing your new banner, please run the /setup command.
-    You will be presented with a menu, At the top of the menu you will see your current banner settings.
+    You will be then presented with a menu. 
+    At the top of the menu you will see your current banner settings.
     If this is your first time running the bot the settings will be the default settings.
     Under your current settings you will see the current image of you banner. \n
     The banner image will change after each change you make to it using the menu.
@@ -131,7 +132,7 @@ const helpMenu = async (client, interaction, embedNum) => {
   const [collector, err2] = await tryCatchHelper(
     interaction.channel.createMessageComponentCollector({
       filter,
-      time: 45000,
+      time: 120000,
     })
   );
 
