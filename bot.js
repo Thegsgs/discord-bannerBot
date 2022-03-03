@@ -7,6 +7,7 @@ const updateManager = require("./utils/updateManager");
 const getUpdatingServers = require("./utils/getUpdatingServers");
 const resumeUpdates = require("./utils/resumeUpdates");
 const tryCatchHelper = require("./utils/tryCatchHelper");
+const helpMenu = require("./commands/helpMenu");
 
 mongoose.connect("mongodb://localhost:27017/serversdb");
 
@@ -75,6 +76,8 @@ client.on("interactionCreate", async (interaction) => {
     await updateManager(client, interaction, "stop");
   } else if (commandName === "setup") {
     await setupMenu(interaction, client, permittedRoles);
+  } else if (commandName === "help") {
+    await helpMenu(client, interaction);
   }
 });
 

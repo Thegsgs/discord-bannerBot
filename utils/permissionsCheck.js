@@ -16,10 +16,13 @@ const permissionsCheck = async (interaction) => {
     );
     if (err) reject(err);
     // If first time setup must be owner
+    // Or Admin or have manage server role
     if (!serverConfig) {
       if (
         interaction.user.id !== "367624248271044608" &&
-        interaction.user.id !== interaction.guild.ownerId
+        interaction.user.id !== interaction.guild.ownerId &&
+        !interaction.user.permissions.has(Permissions.FLAGS.ADMINISTRATOR) &&
+        !interaction.user.permissions.has(Permissions.FLAGS.MANAGE_GUILD)
       )
         resolve(false);
       else resolve(true);

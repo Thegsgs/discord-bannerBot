@@ -34,14 +34,14 @@ const setupMenu = async (interaction, client, permittedRoles) => {
     const buttonRow = new MessageActionRow().addComponents(
       new MessageButton()
         .setCustomId("exit")
-        .setLabel("Exit")
+        .setLabel("Close")
         .setStyle("DANGER")
         .setEmoji("<:close:942825923525349376>"),
       new MessageButton()
-        .setLabel("Tutorial")
+        .setLabel("Join our Discord")
         .setStyle("LINK")
-        .setEmoji("<:youtube:942825849684656158>")
-        .setURL("https://nodejs.org/en/docs/guides/debugging-getting-started/"),
+        .setEmoji("<:discord:948332203400658975>")
+        .setURL("https://discord.gg/HY2yuZSd"),
       new MessageButton()
         .setLabel("Support")
         .setStyle("LINK")
@@ -115,46 +115,47 @@ const setupMenu = async (interaction, client, permittedRoles) => {
 
     const setupEmbed = new MessageEmbed()
       .setColor(serverConfig.containerBorderColor)
-      .setTitle("**__bannerBot:__**")
       .setAuthor("bannerBot", client.user.displayAvatarURL())
       .setImage("attachment://updated-banner.png")
       .addFields(
         {
-          name: "⚠️⚠️⚠️ **__The bot is in early alpha state, things will break!__**⚠️⚠️⚠️",
-          value: `**__CURRENT SETTINGS:__**`,
-        },
-        {
-          name: "__Current frame settings__:",
-          value: `🔹__Border color__: **${serverConfig.containerBorderColor}**
-          🔹__Font color__: **${serverConfig.fontColor}**
-          🔹__Font name__: **${serverConfig.containerFont}**
-          🔹__Text size__: **${serverConfig.textSize}**
-          🔹__Background color__: **${serverConfig.containerBackgroundColor}**
-          🔹__Background image__: ${
+          name: "Current frame settings:",
+          value: `🔹Border color: **${serverConfig.containerBorderColor}**
+          🔹Font color: **${serverConfig.fontColor}**
+          🔹Font name: **${serverConfig.containerFont}**
+          🔹Text size: **${serverConfig.textSize}**
+          🔹Background color: **${serverConfig.containerBackgroundColor}**
+          🔹Background image: ${
             serverConfig.containerBackgroundImage || "**None**"
           }
-                    🔹__Custom Shape__: ${
+                    🔹Custom Shape: ${
                       serverConfig.containerShapeCustom || "**None**"
                     }
                     `,
           inline: true,
         },
         {
-          name: "__Current general settings__:",
+          name: "Current general settings:",
           value: `
-          __Currently updating__: ${
-            serverConfig.isUpdating ? "Updating!  🟢" : "Not updating!  🔴"
+          🔹Background Image: ${
+            `[Link](${serverConfig.backgroundImage})` || "**None**"
           }
-          __Background Image__: ${serverConfig.backgroundImage || "**None**"}
-          🔹__Icons color__: **${serverConfig.iconsColor}**
-          🔹__Icon 1__: ${serverConfig.icon1 || "**None**"}
-          🔹__Icon 2__: ${serverConfig.icon2 || "**None**"}
-          🔹__Icon 3__: ${serverConfig.icon3 || "**None**"}
+          🔹Icons color: **${serverConfig.iconsColor}**
+          🔹Icon 1: ${`[Link](${serverConfig.icon1})` || "**None**"}
+          🔹Icon 2: ${`[Link](${serverConfig.icon2})` || "**None**"}
+          🔹Icon 3: ${`[Link](${serverConfig.icon3})` || "**None**"}
                    `,
           inline: true,
         }
       )
-      .setFooter("bannerBot", client.user.displayAvatarURL());
+      .setFooter(
+        `${serverConfig.isUpdating ? "Updates are on" : "Updates are off"}`,
+        `${
+          serverConfig.isUpdating
+            ? "https://i.imgur.com/HOKLLSn.png"
+            : "https://i.imgur.com/fXc6ACP.png"
+        }`
+      );
 
     const [menu, error2] = await tryCatchHelper(
       interaction.followUp({

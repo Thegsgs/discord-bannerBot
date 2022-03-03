@@ -4,6 +4,7 @@ const { Routes } = require("discord-api-types/v9");
 const { clientId, token } = require("./config.json");
 
 const commands = [
+  new SlashCommandBuilder().setName("help").setDescription("Opens help menu."),
   new SlashCommandBuilder()
     .setName("start-updating")
     .setDescription("Starts automatically updates the banner every 5 mintues."),
