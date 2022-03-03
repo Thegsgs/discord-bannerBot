@@ -126,7 +126,7 @@ const setupMenu = async (interaction, client, permittedRoles) => {
           🔹Text size: **${serverConfig.textSize}**
           🔹Background color: **${serverConfig.containerBackgroundColor}**
           🔹Background image: ${
-            serverConfig.containerBackgroundImage || "**None**"
+            `[Link](${serverConfig.containerBackgroundImage})` || "**None**"
           }
                     🔹Custom Shape: ${
                       serverConfig.containerShapeCustom || "**None**"
