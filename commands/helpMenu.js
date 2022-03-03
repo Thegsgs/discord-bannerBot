@@ -30,9 +30,9 @@ const helpMenu = async (client, interaction, embedNum) => {
       {
         name: "<:backgrounds:939868806166224956> Change background:",
         value: ` Copy and paste any image you want from the web or copy and paste it's url. 
-    Note the url needs to end with either .png or .jpg, embedNumsuggest copying and pasting an image if you're having issues using it's link.
+    Note the url needs to end with either .png or .jpg, copying and pasting an image if you're having issues using it's link.
     Note that if the image aspect ratio doesn't fit the discord banner the bot will stretch the image to fit it so the result might be different from what you expected.
-    In case this occurs embedNumsuggest looking for the same image in a different aspect ratio or cropping it yourself with an image editing tool. \n
+    In case this occurs  looking for the same image in a different aspect ratio or cropping it yourself with an image editing tool. \n
     \u200b`,
       },
       {
@@ -73,7 +73,7 @@ const helpMenu = async (client, interaction, embedNum) => {
       },
       {
         name: "<:icons:939868685508685844> Change icons:",
-        value: ` Set a different image for any one of the icons. Setting images works the same way as for setting a background. (see 1 and 6.1).
+        value: `Set a different image for any one of the icons. Setting images works the same way as for setting a background. (see 1 and 6.1).
     Note that it's better to use very small images otherwise the icon can stretch and look unlike it's original image. \n
     \u200b`,
       }
