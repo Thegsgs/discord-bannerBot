@@ -129,7 +129,8 @@ const setupMenu = async (interaction, client, permittedRoles) => {
             `[Link](${serverConfig.containerBackgroundImage})` || "**None**"
           }
                     🔹Custom Shape: ${
-                      serverConfig.containerShapeCustom || "**None**"
+                      `[Link](${serverConfig.containerShapeCustom})` ||
+                      "**None**"
                     }
                     `,
           inline: true,
