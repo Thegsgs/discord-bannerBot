@@ -57,14 +57,7 @@ client.on("interactionCreate", async (interaction) => {
     permissionsCheck(interaction)
   );
   if (err) {
-    interaction.editReply(
-      "Please enable Administrator permissions for this bot"
-    );
-    return;
-  }
-  // If user is not permitted permitted roles is equal to false.
-  if (!permittedRoles) {
-    interaction.editReply("You're not permitted to use these commands!");
+    interaction.editReply(err);
     return;
   }
 
