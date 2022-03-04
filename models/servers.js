@@ -12,8 +12,7 @@ const serverSchema = new mongoose.Schema({
     validate: {
       validator: (value) => validator.isURL(value),
     },
-    default:
-      "https://cdn.discordapp.com/attachments/939866981673349174/942873284830167070/unknown.png",
+    default: "https://i.imgur.com/2m0hWzU.png",
   },
   containerShape: {
     required: true,
