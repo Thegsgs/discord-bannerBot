@@ -10,15 +10,15 @@ const changeIcons = async (interaction, client) => {
         .setPlaceholder("Pick the icon you want to change:")
         .addOptions([
           {
-            label: "Icon 1",
+            label: "Icon total members",
             value: "icon1",
           },
           {
-            label: "Icon 2",
+            label: "Icon in voice-chat",
             value: "icon2",
           },
           {
-            label: "Icon 3",
+            label: "Icon total boosts",
             value: "icon3",
           },
         ])

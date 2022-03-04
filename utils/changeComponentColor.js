@@ -6,8 +6,7 @@ const changeComponentColor = async (interaction, component) => {
     const regex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
     const filter = (message) => interaction.user.id === message.author.id;
     interaction.reply({
-      content: `Please write a valid hexadecimal color code (example: #ffd1dc for pastel pink).
-        You can visit colorhexa.com for more information.`,
+      content: `Please write a valid hexadecimal color code (Example: #ffd1dc/#FFD1DC for pastel pink). You can visit [here](<https://www.shutterstock.com/blog/how-hex-colors-work>) for more information about HEX colors.`,
       components: [],
     });
     const [messages, error] = await tryCatchHelper(
