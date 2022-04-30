@@ -31,8 +31,7 @@ const changeContainerColor = async (interaction) => {
     const filter = (message) => interaction.user.id === message.author.id;
 
     interaction.reply({
-      content: `Please write a valid hexadecimal color code (e.g: #ffd1dc for pastel pink). 
-      Or write "custom" (Quotes excluded) to set a custom image as the background.`,
+      content: `Please write a valid **hexadecimal color code** (Example: #ffd1dc/#FFD1DC for pastel pink). You can visit [here](<https://www.shutterstock.com/blog/how-hex-colors-work>) for more information about HEX colors.\nType "**custom**" (quotes excluded) to set a custom image as the background.`,
       components: [],
     });
 

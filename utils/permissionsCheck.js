@@ -21,7 +21,7 @@ const permissionsCheck = async (interaction) => {
         .has(Permissions.FLAGS.VIEW_CHANNEL)
     )
       reject(
-        `Please enable the View Channel permission in this channel for bannerBot.`
+        `Please enable the "View Channel" permission in this channel for bannerBot.`
       );
     if (
       !interaction.guild.me
@@ -29,7 +29,7 @@ const permissionsCheck = async (interaction) => {
         .has(Permissions.FLAGS.SEND_MESSAGES)
     )
       reject(
-        `Please enable the Send Messages and View Channel permission in this channel for bannerBot.`
+        `Please enable the "Send Messages" and View Channel permission in this channel for bannerBot.`
       );
     if (
       !interaction.guild.me
@@ -37,7 +37,7 @@ const permissionsCheck = async (interaction) => {
         .has(Permissions.FLAGS.ATTACH_FILES)
     )
       reject(
-        `Please enable the Attach Files permission in this channel for bannerBot.`
+        `Please enable the "Attach Files" permission in this channel for bannerBot.`
       );
     if (
       !interaction.guild.me
@@ -45,7 +45,7 @@ const permissionsCheck = async (interaction) => {
         .has(Permissions.FLAGS.USE_EXTERNAL_EMOJIS)
     )
       reject(
-        `Please enable the Use External Emojis permission in this channel for bannerBot.`
+        `Please enable the "Use External Emojis" permission in this channel for bannerBot.`
       );
 
     /* Try to get list of roles from server 
@@ -61,9 +61,8 @@ const permissionsCheck = async (interaction) => {
       if (
         userId !== "367624248271044608" && // If not me
         userId !== interaction.guild.ownerId &&
-        !guildMember.permissions.has(Permissions.FLAGS.MANAGE_GUILD, [
-          checkAdmin,
-        ])
+        !guildMember.permissions.has(Permissions.FLAGS.MANAGE_GUILD) &&
+        !guildMember.permissions.has(Permissions.FLAGS.ADMINISTRATOR)
       )
         reject("Insufficient permission to use this bot.");
       else resolve(true);
@@ -75,10 +74,9 @@ const permissionsCheck = async (interaction) => {
       if (
         userId !== "367624248271044608" &&
         userId !== ownerId &&
-        !guildMember.permissions.has(Permissions.FLAGS.MANAGE_GUILD, [
-          checkAdmin,
-        ]) &&
-        !permittedRoles.some((role) => guildMember._roles.includes(role))
+        !guildMember.permissions.has(Permissions.FLAGS.MANAGE_GUILD) &&
+        !permittedRoles.some((role) => guildMember._roles.includes(role)) &&
+        !guildMember.permissions.has(Permissions.FLAGS.ADMINISTRATOR)
       )
         reject("Insufficient permission to use this bot.");
       else {

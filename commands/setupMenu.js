@@ -16,6 +16,7 @@ const colorsMenu = require("../utils/colorsMenu");
 const changeRoles = require("../utils/changeRoles");
 const updateBanner = require("../utils/updateBanner");
 const tryCatchHelper = require("../utils/tryCatchHelper");
+const helpMenu = require("./helpMenu");
 
 const setupMenu = async (interaction, client, permittedRoles) => {
   const serverConfig = await getServerConfig(interaction.guild.id);
@@ -42,6 +43,11 @@ const setupMenu = async (interaction, client, permittedRoles) => {
         .setStyle("LINK")
         .setEmoji("<:discord:948332203400658975>")
         .setURL("https://discord.gg/HY2yuZSd"),
+      new MessageButton()
+        .setLabel("Help")
+        .setStyle("SECONDARY")
+        .setEmoji("📖")
+        .setCustomId("help"),
       new MessageButton()
         .setLabel("Support")
         .setStyle("LINK")
@@ -119,24 +125,27 @@ const setupMenu = async (interaction, client, permittedRoles) => {
       .setImage("attachment://updated-banner.png")
       .addFields(
         {
-          name: "Current frame settings:",
+          name: "Current frame settings",
           value: `🔹Border color: **${serverConfig.containerBorderColor}**
           🔹Font color: **${serverConfig.fontColor}**
           🔹Font name: **${serverConfig.containerFont}**
           🔹Text size: **${serverConfig.textSize}**
           🔹Background color: **${serverConfig.containerBackgroundColor}**
           🔹Background image: ${
-            `[Link](${serverConfig.containerBackgroundImage})` || "**None**"
+            serverConfig.containerBackgroundImage
+              ? `[Link](${serverConfig.containerBackgroundImage})`
+              : "**None**"
           }
                     🔹Custom Shape: ${
-                      `[Link](${serverConfig.containerShapeCustom})` ||
-                      "**None**"
+                      serverConfig.containerShapeCustom
+                        ? `[Link](${serverConfig.containerShapeCustom})`
+                        : "**None**"
                     }
                     `,
           inline: true,
         },
         {
-          name: "Current banner settings:",
+          name: "Current banner settings",
           value: `
           🔹Background Image: ${
             `[Link](${serverConfig.backgroundImage})` || "**None**"
@@ -199,9 +208,17 @@ const setupMenu = async (interaction, client, permittedRoles) => {
     collector.on("collect", async (action) => {
       collector.stop();
       if (action.customId === "exit") {
-        collector.stop();
         return;
       }
+
+      if (action.customId === "help") {
+        await helpMenu(client, interaction).catch((err) => console.error(err));
+        await setupMenu(interaction, client, permittedRoles).catch((err) =>
+          console.error(err)
+        );
+        return;
+      }
+
       if (action.values.includes("shape-change"))
         await changeContainerShape(action, client).catch((err) =>
           console.error(err)
@@ -231,6 +248,8 @@ const setupMenu = async (interaction, client, permittedRoles) => {
         await changeRoles(action, client, permittedRoles).catch((err) =>
           console.error(err)
         );
+
+      // Always call setup menu after resolving any of the functions
       await setupMenu(interaction, client, permittedRoles).catch((err) =>
         console.error(err)
       );

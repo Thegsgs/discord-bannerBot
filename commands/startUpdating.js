@@ -37,7 +37,9 @@ const startUpdating = async (client, interaction) => {
     interaction.followUp(
       `Last update was too recent, starting updates in ${delay} minutes.`
     );
+    await changeProp(interaction.guild.id, "isUpdating", true);
     await setTimeout(() => {
+      if (!serverConfig.isUpdating) return;
       startUpdating(interaction);
     }, delayInMs);
   }

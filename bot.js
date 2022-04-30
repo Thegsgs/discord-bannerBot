@@ -33,9 +33,9 @@ client.once("ready", async () => {
   if (err) {
     console.error(err);
   }
-  // Resume updates on all servers which have it turned on.
+  // Resume updates on all servers which have it turned on and return if perms are missing.
   updatingGuildsArr.forEach((guild) => {
-    if (!guild.me.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return;
+    if (!guild.me.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return;
     resumeUpdates(client, guild);
   });
   console.log(`${updatingGuildsArr.length} servers are resuming updates.`);
