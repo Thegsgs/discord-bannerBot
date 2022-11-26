@@ -39,25 +39,25 @@ const changeContainerShape = async (interaction, client) => {
             label: "Square",
             description: "Square with sharp edges",
             value: "square",
-            emoji: "<:square:939934844438347856>",
+            //emoji: "<:square:939934844438347856>",
           },
           {
             label: "Square rounded",
             description: "Square with very rounded edges",
             value: "square-rounded",
-            emoji: "<:squarerounded:939934820715360316>",
+            //emoji: "<:squarerounded:939934820715360316>",
           },
           {
             label: "Circle",
             description: "A perfect cicrle",
             value: "circle",
-            emoji: "<:circle:939934789887205409>",
+            //emoji: "<:circle:939934789887205409>",
           },
           {
             label: "Custom Shape",
             description: "Upload a .png shape of your choosing",
             value: "custom",
-            emoji: "<:shapes:939868744363163688>",
+            //emoji: "<:shapes:939868744363163688>",
           },
         ])
     );

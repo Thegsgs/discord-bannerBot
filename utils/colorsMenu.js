@@ -13,23 +13,23 @@ const colorsMenu = async (interaction, client) => {
           {
             label: "Frame border color",
             value: "containerBorderColor",
-            emoji: "<:border:949374099346583612>",
+            //emoji: "<:border:949374099346583612>",
           },
           {
             label: "Frame background color",
             value: "containerBackgroundColor",
             description: `Can also set an image by typing "custom".`,
-            emoji: "<:background:949374091268358204>",
+            //emoji: "<:background:949374091268358204>",
           },
           {
             label: "Font color",
             value: "fontColor",
-            emoji: "<:color:949374118367731802>",
+            //emoji: "<:color:949374118367731802>",
           },
           {
             label: "Icons color",
             value: "iconsColor",
-            emoji: "<:people:949374083013959711>",
+            //emoji: "<:people:949374083013959711>",
           },
         ])
     );

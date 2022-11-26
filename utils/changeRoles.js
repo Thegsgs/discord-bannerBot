@@ -13,18 +13,18 @@ const changeRoles = async (interaction, client, permittedRoles) => {
       new MessageButton()
         .setCustomId("exit")
         .setLabel("Exit")
-        .setStyle("DANGER")
-        .setEmoji("<:close:942825923525349376>"),
+        .setStyle("DANGER"),
+        //.setEmoji("<:close:942825923525349376>"),
       new MessageButton()
         .setCustomId("add")
         .setLabel("Add role")
-        .setStyle("SUCCESS")
-        .setEmoji("<:plus:943453208100093962>"),
+        .setStyle("SUCCESS"),
+        //.setEmoji("<:plus:943453208100093962>"),
       new MessageButton()
         .setCustomId("remove")
         .setLabel("Remove role")
-        .setStyle("PRIMARY")
-        .setEmoji("<:minus:943453219147890688>")
+        .setStyle("PRIMARY"),
+        //.setEmoji("<:minus:943453219147890688>")
     );
 
     const rolesEmbed = new MessageEmbed()

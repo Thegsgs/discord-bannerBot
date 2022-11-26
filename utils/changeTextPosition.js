@@ -12,47 +12,47 @@ const changeTextPosition = async (interaction, client) => {
           {
             label: "Center",
             value: "center-center",
-            emoji: "<:center:939927793238696006>",
+            //emoji: "<:center:939927793238696006>",
           },
           {
             label: "Top center",
             value: "top-center",
-            emoji: "<:topcenter:939925438350897232>",
+            //emoji: "<:topcenter:939925438350897232>",
           },
           {
             label: "Top right",
             value: "top-right",
-            emoji: "<:topright:939925786054500353>",
+            //emoji: "<:topright:939925786054500353>",
           },
           {
             label: "Center right",
             value: "center-right",
-            emoji: "<:centerright:939925379244773427>",
+            //emoji: "<:centerright:939925379244773427>",
           },
           {
             label: "Bottom right",
             value: "bottom-right",
-            emoji: "<:bottomright:939925298894483467>",
+            //emoji: "<:bottomright:939925298894483467>",
           },
           {
             label: "Bottom center",
             value: "bottom-center",
-            emoji: "<:bottomcenter:939925246255964180>",
+            //emoji: "<:bottomcenter:939925246255964180>",
           },
           {
             label: "Bottom left",
             value: "bottom-left",
-            emoji: "<:bottomleft:939925271333732362>",
+            //emoji: "<:bottomleft:939925271333732362>",
           },
           {
             label: "Center left",
             value: "center-left",
-            emoji: "<:centerleft:939925333140996136>",
+            //emoji: "<:centerleft:939925333140996136>",
           },
           {
             label: "Top left",
             value: "top-left",
-            emoji: "<:topleft:939925466750545971>",
+            //emoji: "<:topleft:939925466750545971>",
           },
         ])
     );
