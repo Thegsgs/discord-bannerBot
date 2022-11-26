@@ -253,7 +253,7 @@ const makeBanner = async (
     </html>    
 
 `,
-    { "waitUntil": "networkidle0" }
+    { waitUntil: "networkidle0" }
   );
   const banner = await page.screenshot().catch((err) => console.error(err));
   browser.close();

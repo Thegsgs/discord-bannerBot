@@ -20,28 +20,27 @@ const helpMenu = require("./helpMenu");
 
 const setupMenu = async (interaction, client, permittedRoles) => {
   const serverConfig = await getServerConfig(interaction.guild.id);
-
+  // Gets server configuration from database
   if (serverConfig) {
     const [banner, error1] = await tryCatchHelper(
       updateBanner(interaction.guild)
     );
 
     if (error1) {
-      interaction.followUp("An error has occured.");
+      interaction.followUp("Error retrieving server.");
     }
 
     const updatedBanner = new MessageAttachment(banner, "updated-banner.png");
-
     const buttonRow = new MessageActionRow().addComponents(
       new MessageButton()
         .setCustomId("exit")
         .setLabel("Close")
-        .setStyle("DANGER")
-        .setEmoji("<:close:942825923525349376>"),
+        .setStyle("DANGER"),
+        //.setEmoji("<:close:942825923525349376>"),
       new MessageButton()
         .setLabel("Join our Discord")
         .setStyle("LINK")
-        .setEmoji("<:discord:948332203400658975>")
+        //.setEmoji("<:discord:948332203400658975>")
         .setURL("https://discord.gg/HY2yuZSd"),
       new MessageButton()
         .setLabel("Help")
@@ -64,43 +63,43 @@ const setupMenu = async (interaction, client, permittedRoles) => {
             label: "Change Background",
             description: "Set a new banner background image from file or URL",
             value: "background-change",
-            emoji: "<:backgrounds:939868806166224956>",
+            //emoji: "<:backgrounds:939868806166224956>",
           },
           {
             label: "Change Shape",
             description: "Set a new shape for the number frames",
             value: "shape-change",
-            emoji: "<:shapes:939868744363163688>",
+            //emoji: "<:shapes:939868744363163688>",
           },
           {
             label: "Change Font",
             description: "Choose a new font from a collection",
             value: "font-change",
-            emoji: "<:fonts:939868716026429530>",
+            //emoji: "<:fonts:939868716026429530>",
           },
           {
             label: "Change text size",
             description: "Pick a new text size",
             value: "size-change",
-            emoji: "<:size:942837778859823114>",
+            //emoji: "<:size:942837778859823114>",
           },
           {
             label: "Change text position",
             description: "Position the text inside the frames",
             value: "position-change",
-            emoji: "<:position:939933078023983185>",
+            //emoji: "<:position:939933078023983185>",
           },
           {
             label: "Change Colors",
             description: "Opens a new menu for coloring options",
             value: "colors-change",
-            emoji: "<:colors:939868880757743627>",
+            //emoji: "<:colors:939868880757743627>",
           },
           {
             label: "Change Icons",
             description: "Change the icons",
             value: "icons-change",
-            emoji: "<:icons:939868685508685844>",
+            //emoji: "<:icons:939868685508685844>",
           },
         ])
     );
@@ -114,7 +113,7 @@ const setupMenu = async (interaction, client, permittedRoles) => {
             label: "Roles Options",
             description: "Set which roles can customize the banner",
             value: "role-settings",
-            emoji: "<:mod:943446130182729788>",
+            //emoji: "<:mod:943446130182729788>",
           },
         ])
     );
@@ -170,13 +169,17 @@ const setupMenu = async (interaction, client, permittedRoles) => {
     const [menu, error2] = await tryCatchHelper(
       interaction.followUp({
         embeds: [setupEmbed],
-        components: [buttonRow, styleOptionsMenu, generalOptionsMenu],
-        files: [updatedBanner],
+        components: [
+          buttonRow, styleOptionsMenu, generalOptionsMenu
+        ],
+        files: [
+          updatedBanner
+        ],
         fetchReply: true,
       })
     );
 
-    if (error2) interaction.followUp("An error has occured.");
+    if (error2) interaction.followUp("An error has occured. 1");
 
     client.once("interactionCreate", (newInteraction) => {
       if (newInteraction.user.id !== interaction.user.id) return;
